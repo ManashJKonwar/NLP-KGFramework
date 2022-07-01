@@ -26,7 +26,7 @@ class GraphGenerator:
         self.api_token = ''
         self.graph_auto_created = False
 
-        self.connection = tg.TigerGraphConnection(host=self.host_name, username=self.user_name, password=self.password, graphname=self.graph_name, gsqlVersion="3.5.0", useCert=True)
+        self.connection = tg.TigerGraphConnection(host=self.host_name, username=self.user_name, password=self.password, graphname=self.graph_name, gsqlVersion="3.5.3", tgCloud=True)
 
         self.logger.info("GraphGenerator initialized.")
 
