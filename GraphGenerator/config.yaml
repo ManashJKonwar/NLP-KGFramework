@@ -1,0 +1,10 @@
+model_configurations:
+  load_bert_from_local: False
+  local_bert_model_path: 
+  remote_bert_model_path: dslim/bert-base-NER
+
+dataset_configurations:
+  data_file_path: data\raw_partner_headlines_tiny.csv
+  entity_confidence_score: 0.7
+  extra_domain_noun_path: domain_nouns_list.json
+  extra_domain_verb_path: domain_verbs_list.json
