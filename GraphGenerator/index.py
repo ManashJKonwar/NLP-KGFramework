@@ -16,6 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from Loggers.generate_logger import graph_logger
 from utility import read_config
 from entity_extractor import EntityExtractor
+from pos_identifier import PosIdentifier
 
 # Creates the logger base directory if it does not exist
 if not os.path.exists('logs'):
@@ -36,6 +37,8 @@ def graph_generator_start():
     
     # Initiating the entity extraction module
     entity_extractor = EntityExtractor(master_config=config, logger=logger)
+    # Initiating the pos module
+    pos_identifier = PosIdentifier(master_config=config, logger=logger)
 
 if __name__ == "__main__":
     graph_generator_initialize()
