@@ -34,6 +34,7 @@ class EntityExtractor:
 
         # Intialize confidence score for ner
         self._confidence_score = float(self._master_config['dataset_configurations']['entity_confidence_score']) # 0.7
+        
         self._logger.info('GG: Entity extractor intialized successfully')
 
     def _retrieve_model_essentials(self):

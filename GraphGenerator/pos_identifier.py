@@ -27,6 +27,7 @@ class PosIdentifier:
                                 model_name='en_core_web_sm', 
                                 exclude_list=[]
                             )
+        
         self._logger.info('GG: Part of Speech pipeline intialized successfully')
 
     def _load_spacy_model(self, model_name='en_core_web_sm', exclude_list=None):
