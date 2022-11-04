@@ -12,3 +12,6 @@ dataset_configurations:
   content_name: news_headlines
   most_common_words_count: 50
   generate_domain_words: True
+
+graphical_configurations:
+  pattern_match: [E+V[EN]+]
