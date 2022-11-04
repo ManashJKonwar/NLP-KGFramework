@@ -46,11 +46,11 @@ class DomainRetriever:
                                 model_name='en_core_web_sm', 
                                 exclude_list=[]
                             )
-        self._logger.info('GG: Part of Speech pipeline intialized successfully')
+        self._logger.info('GG: Domain retriever based nlp pipeline intialized successfully')
 
         # Retrieving english stopwords
         self._stop_words = set(stopwords.words('english'))
-        self._logger.info('GG: Stopwords loaded successfully')
+        self._logger.info('GG: Domain retriever based stopwords loaded successfully')
 
         # Configuration based extraction
         self._content_name = self._master_config['dataset_configurations']['content_name']
@@ -58,7 +58,7 @@ class DomainRetriever:
         self._dump_domain_word_lists = (self._master_config['dataset_configurations']['dump_domain_words'] == 'True')
         self._preload_domain_word_lists = (self._master_config['dataset_configurations']['preload_domain_words'] == 'True')
         self._domain_collection_path = self._master_config['dataset_configurations']['extra_domain_words_path']
-        self._logger.info('GG: Configuration loaded successfully')
+        self._logger.info('GG: Domain retriever based configurations loaded successfully')
 
         self._logger.info('GG: Domian retriever intialized successfully')
 
