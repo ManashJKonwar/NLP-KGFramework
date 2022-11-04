@@ -18,6 +18,7 @@ from utility import read_config
 from entity_extractor import EntityExtractor
 from pos_identifier import PosIdentifier
 from domain_retriever import DomainRetriever
+from pattern_finder import PatternFinder
 
 # Creates the logger base directory if it does not exist
 if not os.path.exists('logs'):
@@ -42,6 +43,8 @@ def graph_generator_start():
     pos_identifier = PosIdentifier(master_config=config, logger=logger)
     # Intiating the domain retrieval module
     domain_retriever = DomainRetriever(master_config=config, logger=logger)
+    # Initiating the pattern finder module
+    pattern_finder = PatternFinder(master_config=config, logger=logger)
 
 if __name__ == "__main__":
     graph_generator_initialize()
