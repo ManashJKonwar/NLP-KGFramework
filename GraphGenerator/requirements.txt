@@ -8,3 +8,7 @@ nltk==3.7  # https://pypi.org/project/nltk/3.7/  # Natural Language Toolkit
 spacy==3.4.2  # https://pypi.org/project/spacy/3.4.2/  # Industrial-strength Natural Language Processing (NLP) in Python
 transformers==4.24.0  # https://pypi.org/project/transformers/4.24.0/  # State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow
 torch==1.13.0  # https://pypi.org/project/torch/1.13.0/  # Tensors and Dynamic neural networks in Python with strong GPU acceleration
+
+# Graph DB Connectors
+# ------------------------------------------------------------------------------
+neo4j-driver==5.2.0  # https://pypi.org/project/neo4j-driver/5.2.0/  # Neo4j Bolt driver for Python
