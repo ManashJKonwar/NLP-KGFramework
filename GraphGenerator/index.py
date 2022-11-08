@@ -19,6 +19,10 @@ from entity_extractor import EntityExtractor
 from pos_identifier import PosIdentifier
 from domain_retriever import DomainRetriever
 from pattern_finder import PatternFinder
+from graph_generator import GraphGenerator
+from graph_operator import GraphOperator
+
+entity_extractor, pos_identifier, domain_retriever, pattern_finder, graph_generator = None, None, None, None, None
 
 # Creates the logger base directory if it does not exist
 if not os.path.exists('logs'):
@@ -34,9 +38,10 @@ logger = logging.getLogger('graph_generator_handler') # Retrieve Logger Handler
 def graph_generator_initialize():
     logger.info('App Start: Graph Generate Module initializing.')
 
-def graph_generator_start():
-    logger.info('Graph Generator Module has been invoked')
+def initialize_supporting_modules():
+    logger.info('App Start: Graph Generator Supporting modules initialization started')
     
+    global entity_extractor, pos_identifier, domain_retriever, pattern_finder, graph_generator
     # Initiating the entity retrieval module
     entity_extractor = EntityExtractor(master_config=config, logger=logger)
     # Initiating the pos retrieval module
@@ -45,7 +50,29 @@ def graph_generator_start():
     domain_retriever = DomainRetriever(master_config=config, logger=logger)
     # Initiating the pattern finder module
     pattern_finder = PatternFinder(master_config=config, logger=logger)
+    # Intiating the graph generator module
+    graph_generator = GraphGenerator(master_config=config, logger=logger)
+
+    logger.info('App Start: Graph Generator Supporting modules initialized successfully')
+
+def generate_graph_from_input():
+    logger.info('App Start: Graph Operator initialization started')
+
+    global entity_extractor, pos_identifier, domain_retriever, pattern_finder, graph_generator
+    graph_operator = GraphOperator(
+                        master_config=config, 
+                        logger=logger, 
+                        entity_extractor=entity_extractor, 
+                        pos_identifier=pos_identifier, 
+                        domain_retriever=domain_retriever, 
+                        pattern_finder=pattern_finder, 
+                        graph_generator=graph_generator
+                    )
+    
+    logger.info('App Start: Graph Operator initialized successfully')
+
 
 if __name__ == "__main__":
     graph_generator_initialize()
-    graph_generator_start()
+    initialize_supporting_modules()
+    generate_graph_from_input()
