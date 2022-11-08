@@ -24,7 +24,7 @@ class PatternFinder:
         self._logger = logger
 
         # Configuration based extraction
-        self._acceptable_pattern_list = self._master_config['GraphSettings']['SentencePatternRegex'] #this is the acceptable pattern of sentences.
+        self._acceptable_pattern_list = self._master_config['graphical_configurations']['pattern_match'] #this is the acceptable pattern of sentences.
         self._logger.info('GG: Pattern Finder based configurations loaded successfully')
 
         self._logger.info('GG: Pattern Finder initialized successfully')
