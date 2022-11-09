@@ -17,3 +17,8 @@ def read_config(config_file_path=None):
         with open(config_file_path) as f:
             data = yaml.load(f, Loader=SafeLoader)
         return data
+
+def write_yaml(file_path=None, data_dict=None):
+    if file_path is not None and data_dict is not None:
+        with open(file_path, 'w') as file:
+            yaml.dump(data_dict, file)
