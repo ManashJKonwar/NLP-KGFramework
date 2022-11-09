@@ -8,15 +8,18 @@ dataset_configurations:
   entity_confidence_score: 0.7
   extra_domain_words_path: domain_related_words.yaml
   dump_domain_words: True
-  preload_domain_words: True
-  content_name: news_headlines
+  preload_domain_words: False
+  content_col_name: headline
+  date_col_name: date
   most_common_words_count: 50
+  use_optimal_most_common_count: True
+  common_word_coverage_score: 0.7
   generate_domain_words: True
 
 graphical_configurations:
   pattern_match: ['E+V[EN]+']
-  selected_graph_database: 'neo4j' 
-  host_name: 'neo4j://localhost:7687'
-  user_name: 'neo4j'
-  password: '123456'
+  selected_graph_database: neo4j 
+  host_name: neo4j://localhost:7687
+  user_name: neo4j
+  password: 123456
   graph_name: ''
