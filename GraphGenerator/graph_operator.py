@@ -114,3 +114,5 @@ class GraphOperator:
         # Selected graphical relationships to be created
         verb_list = copy.deepcopy(self._domain_words['verbs'])
         relationship_infos = [{'name':relationship_name} for relationship_name in verb_list]
+
+        self._graph_generator.generate_graph_schema()

@@ -68,9 +68,10 @@ def generate_graph_from_input():
                         pattern_finder=pattern_finder, 
                         graph_generator=graph_generator
                     )
-    
     logger.info('App Start: Graph Operator initialized successfully')
 
+    graph_operator.process_input()
+    logger.info('App Start: Graph data generated successfully')
 
 if __name__ == "__main__":
     graph_generator_initialize()

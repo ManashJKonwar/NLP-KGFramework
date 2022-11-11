@@ -38,6 +38,9 @@ class GraphGenerator:
         
         self._logger.info('GG: Graph generator intialized successfully')
 
+    def generate_graph_schema(self):
+        print('here')
+
 class Neo4JConnection:
     def __init__(self, **kwargs):
         """
