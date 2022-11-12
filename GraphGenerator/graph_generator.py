@@ -38,8 +38,21 @@ class GraphGenerator:
         
         self._logger.info('GG: Graph generator intialized successfully')
 
-    def generate_graph_schema(self):
-        print('here')
+    def generate_graph_schema(self, node_infos, relationship_infos):
+        """
+        This method is to setup the graph schema for given nodal infos and relationship infos
+        """
+        # Checks and create the graph schema if it does not exists
+        if self._graph_selected.__eq__('neo4j'):
+            self._graph_connector.query("CREATE OR REPLACE DATABASE %s" %(self._graph_name))
+            self._logger.info('GG: Graph created successfully')
+
+            # graph_selected_query = """
+            # CALL gds.graph.exists(graphName: String) YIELD
+            # graphName: String,
+            # exists: Boolean
+            # """ %(self._graph_name)
+            # self._graph_connector.query(query=graph_selected_query)
 
 class Neo4JConnection:
     def __init__(self, **kwargs):
@@ -55,16 +68,34 @@ class Neo4JConnection:
         self._user_name = kwargs.get('user_name')
         self._password = kwargs.get('password')
         self._graph_name = kwargs.get('graph_name')
-        self._db_connector_instance = self._get_connector()
+        self._db_driver = self._get_connector()
 
-    def get_db_connector(self):
+    def close(self):
+        if self._db_driver is not None:
+            self._db_driver.close()
+    
+    def query(self, query, db=None):
+        assert self._db_driver is not None, "Driver not initialized!"
+        session = None
+        response = None
+        try: 
+            session = self._db_driver.session(database=db) if db is not None else self._db_driver.session() 
+            response = list(session.run(query))
+        except Exception as e:
+            print("Query failed:", e)
+        finally: 
+            if session is not None:
+                session.close()
+            return response
+
+    def get_db_driver(self):
         """
         This method is a getter function to retrieve the neo 4j connector object
         
         return:
         neo 4j connector object
         """
-        return self._db_connector_instance
+        return self._db_driver
 
     def _get_connector(self):
         """
