@@ -115,4 +115,5 @@ class GraphOperator:
         verb_list = copy.deepcopy(self._domain_words['verbs'])
         relationship_infos = [{'name':relationship_name} for relationship_name in verb_list]
 
-        self._graph_generator.generate_graph_schema()
+        self._graph_generator.generate_graph_schema(node_infos, relationship_infos)
+        self._logger.info('GG: Graph Operator setting up graph schema completed successfully')

@@ -34,7 +34,7 @@ class GraphGenerator:
                                         user_name=self._graph_user_name,
                                         password=self._graph_password,
                                         graph_name=self._graph_name
-                                    ).get_db_connector()
+                                    )
         
         self._logger.info('GG: Graph generator intialized successfully')
 
@@ -44,15 +44,33 @@ class GraphGenerator:
         """
         # Checks and create the graph schema if it does not exists
         if self._graph_selected.__eq__('neo4j'):
-            self._graph_connector.query("CREATE OR REPLACE DATABASE %s" %(self._graph_name))
-            self._logger.info('GG: Graph created successfully')
+            # Uncomment for enterprise version
+            # self._graph_connector.query("CREATE OR REPLACE DATABASE %s" %(self._graph_name))
+            # self._logger.info('GG: Graph created successfully')
 
-            # graph_selected_query = """
-            # CALL gds.graph.exists(graphName: String) YIELD
-            # graphName: String,
-            # exists: Boolean
-            # """ %(self._graph_name)
-            # self._graph_connector.query(query=graph_selected_query)
+            graph_selected_query = """
+            SHOW DATABASE %s YIELD * RETURN count(*) as count
+            """ %(self._graph_name)
+            response = self._graph_connector.query(query=graph_selected_query)
+
+            if response[0][0]==1:
+                self._logger.info('GG: Graph Database exists')
+            else:
+                self._logger.error('GG: Graph Database does not exist')
+                return
+
+        # Generate the node level indices
+        self.generate_nodes_schema(node_infos)
+
+    def generate_nodes_schema(node_infos):
+        """
+        This method creates the initial nodes (vertices) with the given list of node_infos
+        """
+        self._logger.info('GG: Generating node level vertices started')
+
+        
+
+
 
 class Neo4JConnection:
     def __init__(self, **kwargs):
