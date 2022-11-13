@@ -21,5 +21,5 @@ graphical_configurations:
   selected_graph_database: neo4j 
   host_name: neo4j://localhost:7687
   user_name: neo4j
-  password: 123456
-  graph_name: ''
+  password: '123456'
+  graph_name: headlinesgraph
