@@ -7,6 +7,8 @@ __maintainer__ = "konwar.m"
 __email__ = "rickykonwar@gmail.com"
 __status__ = "Development"
 
+import copy
+
 class GraphGenerator:
     def __init__(self, master_config=None, logger=None) -> None:
         """
@@ -62,14 +64,50 @@ class GraphGenerator:
         # Generate the node level indices
         self.generate_nodes_schema(node_infos)
 
-    def generate_nodes_schema(node_infos):
+    def generate_nodes_schema(self, node_infos):
         """
         This method creates the initial nodes (vertices) with the given list of node_infos
         """
         self._logger.info('GG: Generating node level vertices started')
 
-        
+        new_node_available = False
+        query_list = []
+        node_to_be_added = []
 
+        if self._graph_selected.__eq__('neo4j'):
+            existing_nodes_query = """
+            MATCH (n) WHERE n.name =~ '(.+)\(.+\)' return n
+            """
+            response = self._graph_connector.query(query=existing_nodes_query, db=self._graph_name)
+            if isinstance(response, list) and len(list) == 0:
+                pass
+            else:
+                existing_nodes = copy.deepcopy(response)
+
+            # Checking if the new nodes to be added are already present and select
+            # only those which needs to be freshly created inside the graph
+            query_list = []
+            to_be_added = []
+
+            for node_info in node_infos:
+                #skip this if it already exists.
+                if str.lower(node_info['name']) in existing_nodes:
+                    continue
+                query_list.append(str.format('CREATE VERTEX {}(PRIMARY_ID id STRING, name STRING) WITH STATS="OUTDEGREE_BY_EDGETYPE", PRIMARY_ID_AS_ATTRIBUTE="true"', node_info['name']))
+                new_node_available = True
+                node_to_be_added.append(node_info)
+
+            full_query = "\n".join(query_list)
+            full_query = "USE GLOBAL" + "\n" + full_query
+            self._logger.info("creating vertex types globally.")
+            result = self.connection.gsql(full_query)
+
+            self._logger.info(str.format("result: {}", result))
+
+        if new_node_available:
+            #adding the created nodes into the graph
+            self._logger.info("adding new nodes to graph's schema.")
+            self.add_nodes_to_graph_schema(node_to_be_added)
 
 
 class Neo4JConnection:
